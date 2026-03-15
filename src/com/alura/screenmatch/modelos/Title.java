@@ -16,8 +16,16 @@ public class Title {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setYearOfRelease(int yearOfRelease) {
         this.yearOfRelease = yearOfRelease;
+    }
+
+    public int getYearOfRelease() {
+        return yearOfRelease;
     }
 
     public void setFilmLengthMinute(int filmLengthMinute) {

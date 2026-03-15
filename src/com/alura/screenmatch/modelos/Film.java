@@ -18,4 +18,8 @@ public class Film extends Title implements Classify {
         return (int) obtainRatingAvarage() / 2;
     }
 
+    @Override
+    public String toString() {
+        return "Filme: " + this.getName() + " (" + this.getYearOfRelease() + ")";
+    }
 }

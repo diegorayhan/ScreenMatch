@@ -4,6 +4,8 @@ import com.alura.screenmatch.modelos.Episodes;
 import com.alura.screenmatch.modelos.Film;
 import com.alura.screenmatch.modelos.Series;
 
+import java.util.ArrayList;
+
 public class Main {
     static void main(String[] args) {
         Film myFilm1 = new Film();
@@ -49,6 +51,24 @@ public class Main {
         episode.setSerie(serie1);
         episode.setTotalViews(300);
         filtro.filter(episode);
+
+        var myFilm3 = new Film();
+        myFilm3.setName("Ponyo");
+        myFilm3.setDirector("Studio Ghibli");
+        myFilm3.setYearOfRelease(2018);
+        myFilm3.setFilmLengthMinute(101);
+        myFilm3.rate(10);
+
+        ArrayList<Film> filmsList = new ArrayList<>();
+        filmsList.add(myFilm3);
+        filmsList.add(myFilm2);
+        filmsList.add(myFilm1);
+        filmsList.size();
+        System.out.println(filmsList.size());
+        // Java initializes with zero
+        System.out.println("Primeiro filme: " + filmsList.get(0).getName());
+        System.out.println(filmsList);
+        System.out.println("toString do filme | " + filmsList.get(0).toString());
 
     }
 }
