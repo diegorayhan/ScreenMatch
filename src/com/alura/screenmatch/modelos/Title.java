@@ -1,12 +1,31 @@
 package com.alura.screenmatch.modelos;
 
-public class Title {
+import com.google.gson.annotations.SerializedName;
+
+public class Title implements Comparable<Title> {
     private String name;
     private int yearOfRelease;
     private boolean planIncluded;
     private double addUpRatings;
     private int allRatings;
     private int filmLengthMinute;
+
+    //comparable implementation for sorting
+    //a constructor with only the FILM NAME parameter can also be made, in which, the year of release dosnt need to
+    //be inserted
+
+    public Title(String name, int yearOfRelease) {
+        this.name = name;
+        this.yearOfRelease = yearOfRelease;
+    }
+
+    public Title(OmdbTitle myTitleOmdb) {
+        this.name = myTitleOmdb.title();
+        this.yearOfRelease = Integer.valueOf(myTitleOmdb.year());
+        this.filmLengthMinute = Integer.valueOf(myTitleOmdb.runtime()
+                .substring(0,3));
+
+    }
 
     public int getAllRatings() {
         return allRatings;
@@ -49,6 +68,18 @@ public class Title {
 
     public double obtainRatingAvarage(){
         return addUpRatings / allRatings;
+    }
+
+    @Override
+    public int compareTo(Title otherTitle) {
+        return this.getName().compareTo(otherTitle.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Título do filme = " + name + "\n" +
+                "Ano de lançamento = " + yearOfRelease + "\n" +
+                "Duração em minutos= " + filmLengthMinute;
     }
 }
 

@@ -6,6 +6,12 @@ public class Series extends Title{
     private boolean planActive;
     private int minutePerEpisode;
 
+   //super reaches for its dependencies on the super class above it
+
+    public Series(String name, int yearOfRelease) {
+        super(name, yearOfRelease);
+    }
+
     public int getSeason() {
         return season;
     }
@@ -43,4 +49,8 @@ public class Series extends Title{
         return season * episodesPerSeason * minutePerEpisode;
     }
 
+    @Override
+    public String toString() {
+        return "Nome da Série: " + getName() + " (" + getYearOfRelease() + ")";
+    }
 }

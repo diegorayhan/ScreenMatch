@@ -5,6 +5,13 @@ import com.alura.screenmatch.calculos.Classify;
 public class Film extends Title implements Classify {
     private String director;
 
+    //changes how setting the Film name goes. cannot leave Film example = new Film(); on blank. need to input its
+    //respective name AND year of release for it to work.
+    public Film(String name, int yearOfRelease) {
+        super(name, yearOfRelease);
+    }
+
+
     public String getDirector() {
         return director;
     }
