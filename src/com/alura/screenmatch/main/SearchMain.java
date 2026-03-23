@@ -1,5 +1,6 @@
 package com.alura.screenmatch.main;
 
+import com.alura.screenmatch.exception.YearErrorConversionException;
 import com.alura.screenmatch.modelos.OmdbTitle;
 import com.alura.screenmatch.modelos.Title;
 import com.google.gson.FieldNamingPolicy;
@@ -20,25 +21,39 @@ public class SearchMain {
         Scanner search = new Scanner(System.in);
         System.out.println("Digite um filme para busca: ");
         var browse = search.nextLine();
-        String refer = "https://www.omdbapi.com/?t=" + browse + "&apikey=1a80d3fc";
+        String refer = "https://www.omdbapi.com/?t=" + browse.replace(" " ,"+" ) + "&apikey=1a80d3fc";
+        System.out.println(refer);
+        try{
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(refer))
+                    .build();
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(refer))
-                .build();
+            HttpResponse<String> response = client
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+            String json = response.body();
+            System.out.println(json);
 
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
-        String json = response.body();
-        System.out.println(json);
+            Gson gson = new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+                    .create();
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-                .create();
+            OmdbTitle myTitleOmdb = gson.fromJson(json, OmdbTitle.class);
+            System.out.println(myTitleOmdb);
+            //try {
+            Title myTitle = new Title(myTitleOmdb);
+            System.out.println("Titulo convertido: ");
+            System.out.println(myTitle);
+        } catch (NumberFormatException e){
+            System.out.println("Aconteceu um erro");
+            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException e){
+            System.out.println("Argumento invalido");
+            System.out.println(e.getMessage());
+        } catch (YearErrorConversionException e) {
+            System.out.println(e.getMessage());
+        }
 
-        OmdbTitle myTitleOmdb = gson.fromJson(json, OmdbTitle.class);
-        System.out.println(myTitleOmdb);
-        Title myTitle = new Title(myTitleOmdb);
-        System.out.println(myTitle);
+        System.out.println("Programa finalizou corretamente!");
     }
 }
